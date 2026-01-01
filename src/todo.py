@@ -174,7 +174,7 @@ def format_task(task: Task) -> str:
 
 def display_tasks(tasks: list[Task]) -> None:
     """
-    Display all tasks with header or empty message.
+    Display all tasks in a formatted table.
 
     Args:
         tasks: List of Task objects to display
@@ -184,8 +184,18 @@ def display_tasks(tasks: list[Task]) -> None:
         return
 
     print("\nTODO LIST")
-    print("=" * 40)
+    print("=" * 80)
 
+    # Table headers
+    print(f"{'ID':<5} {'Status':<8} {'Title':<30} {'Description':<35}")
+    print("-" * 80)
+
+    # Display each task as a table row
     for task in tasks:
-        print(format_task(task))
-        print()  # Blank line between tasks
+        status = "✓ Done" if task.completed else "Pending"
+        title = (task.title[:27] + "...") if len(task.title) > 30 else task.title
+        description = (task.description[:32] + "...") if len(task.description) > 35 else task.description
+
+        print(f"{task.id:<5} {status:<8} {title:<30} {description:<35}")
+
+    print("=" * 80)
